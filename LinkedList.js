@@ -8,7 +8,6 @@ class Node {
 export class LinkedList {
   constructor(head = null) {
     this.head = head;
-    this.nextNode = null;
   }
 
   traversing(node) {

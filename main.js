@@ -29,11 +29,25 @@ class HashMap {
     const index = this.hash(key);
     if (this.buckets[index % this.buckets.length] == undefined) {
       this.buckets[index % this.buckets.length] = { key: key, value: value };
-    } else if (this.buckets[index % this.buckets.length].key !== key) {
+    } else if (
+      this.buckets[index % this.buckets.length].key !== key &&
+      this.buckets[index % this.buckets.length].key !== undefined
+    ) {
       const previous_data = this.buckets[index % this.buckets.length];
       const list = new LinkedList();
       list.append(previous_data);
       list.append({ key, value });
+      this.buckets[index % this.buckets.length] = list;
+    } else {
+      console.log("awikwok");
+      console.log(this.buckets[index % this.buckets.length].head.value);
+      let current = this.buckets[index % this.buckets.length].head;
+      while (current !== null) {
+        if (current.value.key == key) {
+          current.value.value = value;
+        }
+        current = current.nextNode;
+      }
     }
   }
 }
@@ -41,3 +55,5 @@ class HashMap {
 const myHashMap = new HashMap();
 myHashMap.set("Rama", "awokawok");
 myHashMap.set("Sita", "awokawoks");
+myHashMap.set("Sita", "awo");
+myHashMap.set("Sita", "awos");
