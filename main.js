@@ -1,4 +1,4 @@
-import { LinkedList } from "./LinkedList.js";
+import { Node, LinkedList } from "./LinkedList.js";
 
 class HashMap {
   constructor(loadFactor = 0.75, capacity = 16) {
@@ -26,34 +26,51 @@ class HashMap {
       }
       return;
     }
-    const index = this.hash(key);
-    if (this.buckets[index % this.buckets.length] == undefined) {
-      this.buckets[index % this.buckets.length] = { key: key, value: value };
+    const index = this.hash(key) % this.buckets.length;
+    if (this.buckets[index] == undefined) {
+      console.log(index, key);
+      this.buckets[index] = { key: key, value: value };
     } else if (
-      this.buckets[index % this.buckets.length].key !== key &&
-      this.buckets[index % this.buckets.length].key !== undefined
+      this.buckets[index].key !== key &&
+      this.buckets[index].key !== undefined
     ) {
-      const previous_data = this.buckets[index % this.buckets.length];
+      console.log(index, key);
+      const previous_data = this.buckets[index];
       const list = new LinkedList();
       list.append(previous_data);
       list.append({ key, value });
-      this.buckets[index % this.buckets.length] = list;
+      this.buckets[index] = list;
     } else {
-      console.log("awikwok");
-      console.log(this.buckets[index % this.buckets.length].head.value);
-      let current = this.buckets[index % this.buckets.length].head;
-      while (current !== null) {
-        if (current.value.key == key) {
-          current.value.value = value;
+      console.log(index, key);
+      let current = this.buckets[index];
+
+      if (current instanceof Node || current instanceof LinkedList) {
+        current = this.buckets[index].head;
+        while (current !== null) {
+          if (current.value.key == key) {
+            current.value.value = value;
+          }
+          current = current.nextNode;
         }
-        current = current.nextNode;
+      } else if (current.key == key) {
+        current.value = value;
       }
     }
+  }
+
+  get(key) {
+    let arr = this.buckets.find(function (data) {
+      if (data == undefined) {
+        return false;
+      } else if (data.key == key) {
+        return true;
+      }
+    });
+    console.log(arr);
   }
 }
 
 const myHashMap = new HashMap();
 myHashMap.set("Rama", "awokawok");
-myHashMap.set("Sita", "awokawoks");
-myHashMap.set("Sita", "awo");
-myHashMap.set("Sita", "awos");
+myHashMap.set("yomas", "awokawok");
+myHashMap.set("Sita", "awokawo");
