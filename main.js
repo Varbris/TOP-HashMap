@@ -112,7 +112,6 @@ class HashMap {
           let current = data.head;
           while (current !== null) {
             if (current.value.key == key) {
-              console.log(current.value.key);
               return true;
             }
             current = current.nextNode;
@@ -124,7 +123,7 @@ class HashMap {
         }
       })
       .find((data) => data);
-    return arr;
+    return arr == undefined ? false : arr;
   }
 }
 
@@ -132,4 +131,4 @@ const myHashMap = new HashMap();
 myHashMap.set("Rama", "test1");
 myHashMap.set("yomas", "test3");
 myHashMap.set("Sita", "test");
-console.log(myHashMap.get("yomass"));
+console.log(myHashMap.has("Sitas"));
