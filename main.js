@@ -176,10 +176,47 @@ class HashMap {
     }
     return arrResult;
   }
+  entries() {
+    let arrResult = new Array();
+    let arr = this.buckets.filter(function (data) {
+      if (data instanceof Object) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] instanceof LinkedList) {
+        let current = arr[i].head;
+        while (current !== null) {
+          if (
+            current.value.hasOwnProperty("key") &&
+            current.value.hasOwnProperty("value")
+          ) {
+            let itterArr = new Array();
+            itterArr.push(current.value.key);
+            itterArr.push(current.value.value);
+            arrResult.push(itterArr);
+          }
+          current = current.nextNode;
+        }
+      } else if (
+        arr[i] instanceof LinkedList == false &&
+        arr[i].hasOwnProperty("key") &&
+        arr[i].hasOwnProperty("value")
+      ) {
+        let itterArr = new Array();
+        itterArr.push(arr[i].key);
+        itterArr.push(arr[i].value);
+        arrResult.push(itterArr);
+      }
+    }
+    return arrResult;
+  }
 }
 
 const myHashMap = new HashMap();
 myHashMap.set("Rama", "test1");
 myHashMap.set("yomas", "test3");
 myHashMap.set("Sita", "test");
-console.log(myHashMap.values());
+console.log(myHashMap.entries());
