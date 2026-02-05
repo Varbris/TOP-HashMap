@@ -125,10 +125,31 @@ class HashMap {
       .find((data) => data);
     return arr == undefined ? false : arr;
   }
+
+  length() {
+    let result = 0;
+    this.buckets.forEach(function (data) {
+      if (data instanceof LinkedList) {
+        let current = data.head;
+
+        while (current !== null) {
+          if (current.value.hasOwnProperty("key")) {
+            result++;
+          }
+          current = current.nextNode;
+        }
+      }
+      if (data.hasOwnProperty("key")) {
+        result++;
+      }
+    });
+
+    return result;
+  }
 }
 
 const myHashMap = new HashMap();
 myHashMap.set("Rama", "test1");
 myHashMap.set("yomas", "test3");
 myHashMap.set("Sita", "test");
-console.log(myHashMap.has("Sitas"));
+console.log(myHashMap.length());
