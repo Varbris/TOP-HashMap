@@ -28,20 +28,17 @@ class HashMap {
     }
     const index = this.hash(key) % this.buckets.length;
     if (this.buckets[index] == undefined) {
-      console.log(index, key);
       this.buckets[index] = { key: key, value: value };
     } else if (
       this.buckets[index].key !== key &&
       this.buckets[index].key !== undefined
     ) {
-      console.log(index, key);
       const previous_data = this.buckets[index];
       const list = new LinkedList();
       list.append(previous_data);
       list.append({ key, value });
       this.buckets[index] = list;
     } else {
-      console.log(index, key);
       let current = this.buckets[index];
 
       if (current instanceof Node || current instanceof LinkedList) {
@@ -59,18 +56,42 @@ class HashMap {
   }
 
   get(key) {
-    let arr = this.buckets.find(function (data) {
-      if (data == undefined) {
-        return false;
-      } else if (data.key == key) {
-        return true;
+    let arr = this.buckets
+      .filter(function (data) {
+        // console.log(data);
+
+        if (data === undefined) {
+          return false;
+        } else if (data.key == key) {
+          return true;
+        } else if (data instanceof LinkedList) {
+          let current = data.head;
+          while (current !== null) {
+            if (current.value.key == key) {
+              return current.value;
+            }
+            current = current.nextNode;
+          }
+        }
+      })
+      .find((data) => data);
+    // console.log(arr.head.nextNode);
+    if (arr instanceof LinkedList) {
+      let current = arr.head;
+      while (current !== null) {
+        if (current.value.key == key) {
+          return current.value.value;
+        }
+        current = current.nextNode;
       }
-    });
-    console.log(arr);
+    } else {
+      return arr.value;
+    }
   }
 }
 
 const myHashMap = new HashMap();
-myHashMap.set("Rama", "awokawok");
-myHashMap.set("yomas", "awokawok");
-myHashMap.set("Sita", "awokawo");
+myHashMap.set("Rama", "test1");
+myHashMap.set("yomas", "test3");
+myHashMap.set("Sita", "test");
+console.log(myHashMap.get("yomas"));
