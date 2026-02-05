@@ -146,10 +146,15 @@ class HashMap {
 
     return result;
   }
+  clear() {
+    for (let i = 0; i < this.buckets.length; i++) {
+      delete this.buckets[i];
+    }
+  }
 }
 
 const myHashMap = new HashMap();
 myHashMap.set("Rama", "test1");
 myHashMap.set("yomas", "test3");
 myHashMap.set("Sita", "test");
-console.log(myHashMap.length());
+console.log(myHashMap.clear());
