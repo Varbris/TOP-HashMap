@@ -151,10 +151,35 @@ class HashMap {
       delete this.buckets[i];
     }
   }
+  values() {
+    let arrResult = new Array();
+    let arr = this.buckets.filter(function (data) {
+      if (data instanceof Object) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] instanceof LinkedList) {
+        let current = arr[i].head;
+        while (current !== null) {
+          if (current.value.value !== undefined) {
+            arrResult.push(current.value.value);
+          }
+          current = current.nextNode;
+        }
+      } else {
+        arrResult.push(arr[i].value);
+      }
+    }
+    return arrResult;
+  }
 }
 
 const myHashMap = new HashMap();
 myHashMap.set("Rama", "test1");
 myHashMap.set("yomas", "test3");
 myHashMap.set("Sita", "test");
-console.log(myHashMap.clear());
+console.log(myHashMap.values());
