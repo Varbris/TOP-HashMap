@@ -1,6 +1,6 @@
 import { Node, LinkedList } from "./LinkedList.js";
 
-class HashMap {
+export class HashMap {
   constructor(loadFactor = 0.75, capacity = 16) {
     this.loadFactor = loadFactor;
     this.capacity = capacity;
@@ -214,9 +214,3 @@ class HashMap {
     return arrResult;
   }
 }
-
-const myHashMap = new HashMap();
-myHashMap.set("Rama", "test1");
-myHashMap.set("yomas", "test3");
-myHashMap.set("Sita", "test");
-console.log(myHashMap.entries());
