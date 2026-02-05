@@ -58,8 +58,6 @@ class HashMap {
   get(key) {
     let arr = this.buckets
       .filter(function (data) {
-        // console.log(data);
-
         if (data === undefined) {
           return false;
         } else if (data.key == key) {
@@ -75,7 +73,6 @@ class HashMap {
         }
       })
       .find((data) => data);
-    // console.log(arr.head.nextNode);
     if (arr instanceof LinkedList) {
       let current = arr.head;
       while (current !== null) {
@@ -88,10 +85,45 @@ class HashMap {
       return arr.value;
     }
   }
+
+  has(key) {
+    let arr = this.buckets
+      .filter(function (data) {
+        if (data === undefined) {
+          return false;
+        } else if (data.key == key) {
+          return true;
+        } else if (data instanceof LinkedList) {
+          let current = data.head;
+          while (current !== null) {
+            if (current.value.key == key) {
+              return current.value;
+            }
+            current = current.nextNode;
+          }
+        }
+      })
+      .find((data) => data);
+    console.log(arr);
+
+    if (arr instanceof LinkedList) {
+      let current = arr.head;
+      while (current !== null) {
+        if (current.value.key == key) {
+          return true;
+        }
+        current = current.nextNode;
+      }
+    } else if (arr instanceof Object) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 const myHashMap = new HashMap();
 myHashMap.set("Rama", "test1");
 myHashMap.set("yomas", "test3");
 myHashMap.set("Sita", "test");
-console.log(myHashMap.get("yomas"));
+console.log(myHashMap.has("Sita"));
