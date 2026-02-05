@@ -72,18 +72,22 @@ class HashMap {
           }
         }
       })
-      .find((data) => data);
-    if (arr instanceof LinkedList) {
-      let current = arr.head;
-      while (current !== null) {
-        if (current.value.key == key) {
-          return current.value.value;
+      .map(function (data) {
+        if (data instanceof LinkedList) {
+          let current = data.head;
+          while (current !== null) {
+            if (current.value.key == key) {
+              return current.value.value;
+            }
+            current = current.nextNode;
+          }
+        } else {
+          return data.value;
         }
-        current = current.nextNode;
-      }
-    } else {
-      return arr.value;
-    }
+      })
+      .find((data) => data);
+
+    return arr;
   }
 
   has(key) {
@@ -104,7 +108,6 @@ class HashMap {
         }
       })
       .find((data) => data);
-    console.log(arr);
 
     if (arr instanceof LinkedList) {
       let current = arr.head;
@@ -126,4 +129,4 @@ const myHashMap = new HashMap();
 myHashMap.set("Rama", "test1");
 myHashMap.set("yomas", "test3");
 myHashMap.set("Sita", "test");
-console.log(myHashMap.has("Sita"));
+console.log(myHashMap.get("Rama"));
