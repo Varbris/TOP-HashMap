@@ -31,6 +31,7 @@ export class HashMap {
       return;
     }
     const index = this.hash(key) % this.buckets.length;
+
     if (this.buckets[index] == undefined) {
       this.buckets[index] = { key: key, value: value };
     } else if (
@@ -128,6 +129,31 @@ export class HashMap {
       })
       .find((data) => data);
     return arr == undefined ? false : arr;
+  }
+
+  remove(key) {
+    let isRemoved = false;
+    this.buckets.forEach(function (data, index, array) {
+      if (data instanceof LinkedList) {
+        let current = data.head;
+        while (current !== null) {
+          if (current.value.key === key) {
+            if (current.nextNode == null) {
+              delete array[index];
+              isRemoved = true;
+            } else {
+              data.pop();
+              isRemoved = true;
+            }
+          }
+          current = current.nextNode;
+        }
+      } else if (data.hasOwnProperty("key") && data.key == key) {
+        delete array[index];
+        isRemoved = true;
+      }
+    });
+    return isRemoved;
   }
 
   length() {
