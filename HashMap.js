@@ -18,6 +18,10 @@ export class HashMap {
   }
 
   set(key, value) {
+    let lodPaktor = this.length() / this.capacity;
+    if (lodPaktor > this.loadFactor) {
+      this.capacity = this.capacity * 2;
+    }
     if (typeof key !== "string") {
       try {
         throw new Error("key type Error, use string instead");
