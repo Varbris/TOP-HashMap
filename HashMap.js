@@ -181,6 +181,23 @@ export class HashMap {
       delete this.buckets[i];
     }
   }
+  keys() {
+    let resultArr = new Array();
+    this.buckets.filter(function (data) {
+      if (data instanceof LinkedList) {
+        let current = data.head;
+        while (current !== null) {
+          if (current.value.hasOwnProperty("key")) {
+            resultArr.push(current.value.key);
+          }
+          current = current.nextNode;
+        }
+      } else if (data.hasOwnProperty("key")) {
+        resultArr.push(data.key);
+      }
+    });
+    return resultArr;
+  }
   values() {
     let arrResult = new Array();
     let arr = this.buckets.filter(function (data) {
